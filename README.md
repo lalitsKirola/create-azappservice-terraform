@@ -744,3 +744,40 @@ This setup ensures each environment has its own state file in Azure Storage, iso
 ---
 
 With this setup, managing multiple environments and collaborating with your team becomes more efficient.
+
+
+
+
+/terraform-project
+│
+├── /environments
+│   ├── dev.tfvars        # Dev environment-specific variables
+│   ├── prod.tfvars       # Prod environment-specific variables
+│
+├── /modules
+│   ├── /networking
+│   │   ├── main.tf       # Networking module (VNet, subnets)
+│   │   ├── outputs.tf    # Outputs for networking module
+│   │   ├── variables.tf  # Input variables for networking module
+│   │
+│   ├── /compute
+│   │   ├── main.tf       # Compute module (App Service, VM)
+│   │   ├── outputs.tf    # Outputs for compute module
+│   │   ├── variables.tf  # Input variables for compute module
+│   │
+│   ├── /dns
+│   │   ├── main.tf       # DNS module (Private DNS, records)
+│   │   ├── outputs.tf    # Outputs for DNS module
+│   │   ├── variables.tf  # Input variables for DNS module
+│
+├── /backend-config
+│   ├── dev-backend.tf    # Backend configuration for dev environment
+│   ├── prod-backend.tf   # Backend configuration for prod environment
+│
+├── main.tf               # Root configuration, calls modules, backend setup
+├── variables.tf          # Global variables used across environments
+├── outputs.tf            # Outputs for the entire project
+├── provider.tf           # Provider configuration for Azure
+├── terraform.tfvars      # Default values for variables (if any)
+└── terraform.tfstate     # State file (usually remote, so this might not exist locally)
+
